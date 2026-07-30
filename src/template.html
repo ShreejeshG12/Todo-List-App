@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List</title>
+</head>
+
+<body>
+    <div class="content">
+
+        <div class="sidebar">
+            <div class="sideheader">My Projects</div>
+            <div id="project-list" class="sidecontent"></div>
+            <input id="project-name-input" , type="text" , placeholder="Enter Project Name Here">
+            <button class="add-project">Add Project</button>
+            <div class="sidefooter">@testfooter</div>
+        </div>
+
+        <div class="bodycontent">
+            <div class="toggler"></div>
+            <div class="bodyheader">
+                <button class="add-task">Add Task</button>
+                <dialog id="task-dialog">
+                    <form id="task-form">
+                        <label> Task Title
+                            <input type="text" id="task-title">
+                        </label>
+                        <label>Task Description
+                            <input type="text" maxlength="45" id="task-description">
+                        </label>
+                        <label>Due Date
+                            <input type="date" id="task-date">
+                        </label>
+                        <label>Priority
+                            <select id="task-priority">
+                                <option value="Low" selected>Low</option>
+                                <option value="Medium">Medium</option>
+                                <option value="High">High</option>
+                            </select>
+                        </label>
+                        <button type="button" id="close-form">Create Task</button>
+                        < </form>
+                </dialog>
+            </div>
+            <div id="task-list" class="task-container"></div>
+        </div>
+
+    </div>
+</body>
+
+</html>
