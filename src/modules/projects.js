@@ -16,6 +16,17 @@ export class Project {
     removeTask(taskId) {
         this.tasks = this.tasks.filter(task => task.id !== taskId);
     }
+
+    editTask(taskId, updatedTask) {
+        this.tasks = this.tasks.map(task => {
+            if (task.id === taskId) {
+                return {
+                    ...task,
+                    ...updatedTask
+                }
+            }
+        })
+    }
 };
 
 

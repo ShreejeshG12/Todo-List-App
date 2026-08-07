@@ -2,6 +2,7 @@
 import { renderProjects, renderTasks } from "../modules/render.js";
 import { Project } from "../modules/projects.js";
 import { Task } from "../modules/tasks.js";
+import { createTaskElement } from "./dom.js";
 
 
 // function to display the task lists and options inside the current project
@@ -46,6 +47,7 @@ export function setupAddProjectListerner(app) {
     })
 }
 
+let editingTaskId = null;
 
 export function setupAddTaskListener(app) {
     const addTaskButton = document.querySelector(".add-task");
@@ -54,11 +56,14 @@ export function setupAddTaskListener(app) {
     const closeForm = document.querySelector("#close-form")
 
     addTaskButton.addEventListener("click", () => {
+        editTaskListener = "";
+        taskForm.reset();
         taskDialog.showModal();
+        closeForm.textContent = "Add Task";
     })
 
 
-    closeForm.addEventListener("click", (event) => {
+    taskForm.addEventListener("submit", (event) => {
         event.preventDefault();
 
 
@@ -67,10 +72,19 @@ export function setupAddTaskListener(app) {
         const dueDate = document.querySelector("#task-date");
         const priority = document.querySelector("#task-priority");
 
+        if (editingTaskId) {
+            app.currentProject.editTask(editingTaskId, {
+                title: title.value,
+                description: description.value,
+                dueDate: dueDate.value,
+                priority: priority.value
+            });
 
-        const newTask = new Task(title.value, description.value, dueDate.value, priority.value, false);
+        } else {
+            const newTask = new Task(title.value, description.value, dueDate.value, priority.value, false);
 
-        app.currentProject.addTask(newTask);
+            app.currentProject.addTask(newTask);
+        }
 
         renderTasks(app)
 
@@ -78,13 +92,58 @@ export function setupAddTaskListener(app) {
 
         taskDialog.close();
 
-
-
-
-
     })
-
-
-
-
 }
+
+
+export function deleteTaskListener(app) {
+    const taskList = document.querySelector("#task-list");
+
+    taskList.addEventListener("submit", (event) => {
+        const deleteButton = event.target.closest(".delete-task-button");
+        if (!deleteButton) return;
+
+        const taskCard = deleteButton.closest(".task-card");
+        const taskId = taskCard.dataset.id;
+
+        app.currentProject.removeTask(taskId);
+
+        renderTasks(app)
+    });
+}
+
+export function editTaskListener(app) {
+    const taskList = document.querySelector("#task-list");
+    const taskDialog = document.querySelector("#task-dialog");
+    const closeForm = document.querySelector("#close-form")
+
+    const titleInput = document.querySelector("#task-title")
+    const descriptionInput = document.querySelector("#task-description");
+    const dueDateInput = document.querySelector("#task-date");
+    const priorityInput = document.querySelector("#task-priority");
+
+    taskList.addEventListener("click", (event) => {
+        const editButton = event.target.closest(".edit-task-button");
+        if (!editButton) return;
+
+        const taskCard = editButton.closest(".task-card");
+        const taskId = taskCard.dataset.id
+
+        const task = app.currentProject.tasks.find(task => task.id === taskId);
+
+
+        editingTaskId = taskId;
+
+        titleInput.value = task.title;
+        descriptionInput.value = task.description;
+        dueDateInput.value = task.dueDate;
+        priorityInput.value = task.priority;
+        closeForm.textContent = "Edit Task"
+
+
+
+
+        taskDialog.showModal()
+    })
+}
+

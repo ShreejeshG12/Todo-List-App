@@ -43,9 +43,13 @@ export function createTaskElement(task) {
 
     const editButton = document.createElement("button");
     editButton.textContent = "Edit";
+    editButton.classList.add("edit-task-button");
+    editButton.type = "button";
 
     const deleteButton = document.createElement("button");
     deleteButton.textContent = "Delete";
+    deleteButton.classList.add("delete-task-button");
+    deleteButton.type = "button";
 
 
     taskCard.append(
