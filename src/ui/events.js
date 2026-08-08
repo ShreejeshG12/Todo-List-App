@@ -159,6 +159,7 @@ export function deleteProjectListener(app) {
 
         app.removeProject(projectId)
         renderProjects(app)
+        renderTasks(app)
     })
 }
 
