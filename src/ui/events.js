@@ -3,6 +3,7 @@ import { renderProjects, renderTasks } from "../modules/render.js";
 import { Project } from "../modules/projects.js";
 import { Task } from "../modules/tasks.js";
 import { createTaskElement } from "./dom.js";
+import { AppState } from "../modules/appState.js";
 
 
 // function to display the task lists and options inside the current project
@@ -56,7 +57,7 @@ export function setupAddTaskListener(app) {
     const closeForm = document.querySelector("#close-form")
 
     addTaskButton.addEventListener("click", () => {
-        editTaskListener = "";
+        editingTaskId = "";
         taskForm.reset();
         taskDialog.showModal();
         closeForm.textContent = "Add Task";
@@ -163,3 +164,59 @@ export function deleteProjectListener(app) {
     })
 }
 
+
+let editingProjectId = null;
+
+export function editProjectListener(app) {
+    const projectList = document.querySelector("#project-list")
+    const editProjectDialog = document.querySelector("#edit-project-dialog");
+    const editProjectForm = document.querySelector("#edit-project-form")
+    const editProjectName = document.querySelector("#edit-project-name");
+    const closeEditProjectForm = document.querySelector("#cancel-edit-project")
+
+
+
+    projectList.addEventListener("click", (event) => {
+        const editButton = event.target.closest(".edit-project-item")
+
+        if (!editButton) return;
+
+        const projectItem = editButton.closest(".project-item");
+
+        const projectId = projectItem.dataset.id;
+
+
+        const project = app.projects.find(project => project.id === projectId);
+
+
+        editingProjectId = projectId;
+
+        editProjectName.value = project.name;
+
+        editProjectDialog.showModal()
+
+    });
+
+    editProjectForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+
+        const updatedProjectName = editProjectName.value.trim();
+        if (!updatedProjectName) return;
+
+        app.editProject(editingProjectId, updatedProjectName);
+
+        renderProjects(app);
+
+        editProjectForm.reset();
+        editProjectDialog.close();
+
+        editingProjectId = null;
+    });
+
+    closeEditProjectForm.addEventListener("click", (event) => {
+        editProjectForm.reset()
+        editProjectDialog.close()
+
+        editingProjectId = null;
+    })
+}

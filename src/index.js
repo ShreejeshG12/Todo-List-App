@@ -3,7 +3,7 @@ import { Project } from "./modules/projects.js";
 import { AppState } from "./modules/appState.js";
 import { loadProjects } from "./modules/storage.js";
 import { renderTasks, renderProjects } from "./modules/render.js"
-import { setupProjectListeners, setupAddProjectListerner, setupAddTaskListener, deleteTaskListener, editTaskListener, deleteProjectListener } from "./ui/events.js";
+import { setupProjectListeners, setupAddProjectListerner, setupAddTaskListener, deleteTaskListener, editTaskListener, deleteProjectListener, editProjectListener } from "./ui/events.js";
 
 
 window.app = new AppState;
@@ -32,3 +32,4 @@ setupAddTaskListener(app);
 deleteTaskListener(app)
 editTaskListener(app)
 deleteProjectListener(app)
+editProjectListener(app)

@@ -72,8 +72,14 @@ export function createProjectElement(project) {
     deleteProject.classList.add("delete-project-button")
     deleteProject.type = "button"
 
+    const editProject = document.createElement("button");
+    editProject.textContent = "Edit"
+    editProject.classList.add("edit-project-item")
+    editProject.type = "button"
+
     projectContainer.append(projectName);
     projectContainer.append(deleteProject)
+    projectContainer.append(editProject)
 
     return projectContainer;
 
