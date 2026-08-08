@@ -67,7 +67,13 @@ export function createProjectElement(project) {
     const projectName = document.createElement("span");
     projectName.textContent = project.name;
 
+    const deleteProject = document.createElement("button");
+    deleteProject.textContent = "Delete"
+    deleteProject.classList.add("delete-project-button")
+    deleteProject.type = "button"
+
     projectContainer.append(projectName);
+    projectContainer.append(deleteProject)
 
     return projectContainer;
 

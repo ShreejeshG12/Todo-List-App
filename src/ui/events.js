@@ -147,3 +147,18 @@ export function editTaskListener(app) {
     })
 }
 
+export function deleteProjectListener(app) {
+    const projectList = document.querySelector("#project-list");
+
+    projectList.addEventListener("click", (event) => {
+        const deleteButton = event.target.closest(".delete-project-button")
+        if (!deleteButton) return;
+
+        const projectItem = deleteButton.closest(".project-item")
+        const projectId = projectItem.dataset.id
+
+        app.removeProject(projectId)
+        renderProjects(app)
+    })
+}
+
