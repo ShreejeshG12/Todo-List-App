@@ -1,7 +1,7 @@
 import { Task } from "./modules/tasks.js";
 import { Project } from "./modules/projects.js";
 import { AppState } from "./modules/appState.js";
-import { loadProjects } from "./modules/storage.js";
+import { saveProjects, loadProjects } from "./modules/storage.js";
 import { renderTasks, renderProjects } from "./modules/render.js"
 import { setupProjectListeners, setupAddProjectListerner, setupAddTaskListener, deleteTaskListener, editTaskListener, deleteProjectListener, editProjectListener, toggleTaskListener } from "./ui/events.js";
 
@@ -34,3 +34,4 @@ editTaskListener(app)
 deleteProjectListener(app)
 editProjectListener(app)
 toggleTaskListener(app)
+savedProjects(app.projects)

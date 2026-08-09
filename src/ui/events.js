@@ -4,6 +4,7 @@ import { Project } from "../modules/projects.js";
 import { Task } from "../modules/tasks.js";
 import { createTaskElement } from "./dom.js";
 import { AppState } from "../modules/appState.js";
+import { savedProjects, loadProjects } from "../modules/storage.js";
 
 
 // function to display the task lists and options inside the current project
@@ -85,6 +86,7 @@ export function setupAddTaskListener(app) {
             const newTask = new Task(title.value, description.value, dueDate.value, priority.value, false);
 
             app.currentProject.addTask(newTask);
+            savedProjects(app.projects)
         }
 
         renderTasks(app)
