@@ -220,3 +220,22 @@ export function editProjectListener(app) {
         editingProjectId = null;
     })
 }
+
+
+export function toggleTaskListener(app) {
+    const taskList = document.querySelector("#task-list");
+
+    taskList.addEventListener("change", (event) => {
+        if (!event.target.matches(".task-completed")) return;
+
+        const taskCard = event.target.closest(".task-card");
+        const taskId = taskCard.dataset.id
+
+        const task = app.currentProject.tasks.find(task => task.id === taskId)
+
+        task.toggleComplete();
+        renderTasks(app)
+
+
+    })
+}

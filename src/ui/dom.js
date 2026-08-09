@@ -30,6 +30,7 @@ export function createTaskElement(task) {
     const completedCheckBox = document.createElement("input")
     completedCheckBox.type = "checkbox";
     completedCheckBox.checked = task.complete;
+    completedCheckBox.classList.add("task-completed")
 
     const statusText = document.createElement("span");
 
