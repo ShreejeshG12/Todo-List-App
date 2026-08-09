@@ -49,16 +49,9 @@ export class AppState {
     }
 
     editProject(projectId, updatedProjectName) {
-        this.projects = this.projects.map(project => {
-            if (project.id === projectId) {
-                return {
-                    ...project,
-                    name: updatedProjectName
-                }
-            }
-            return project
-        })
+        const project = this.projects.find(project => project.id === projectId)
+        if (!project) return;
+
+        project.name = updatedProjectName;
     }
-
 }
-
