@@ -42,6 +42,8 @@ export function setupAddProjectListerner(app) {
 
         app.addProject(newProject);
 
+        savedProjects(app.projects);
+
         renderProjects(app);
 
         // Note , using textcontent below does not remove the previous value for project name

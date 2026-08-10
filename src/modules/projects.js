@@ -20,11 +20,13 @@ export class Project {
     editTask(taskId, updatedTask) {
         this.tasks = this.tasks.map(task => {
             if (task.id === taskId) {
-                return {
-                    ...task,
-                    ...updatedTask
-                }
+                task.title = updatedTask.title;
+                task.description = updatedTask.description;
+                task.dueDate = updatedTask.dueDate;
+                task.priority = updatedTask.priority
             }
+
+            return task;
         })
     }
 };
