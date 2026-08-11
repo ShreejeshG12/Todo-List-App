@@ -25,6 +25,7 @@ export function setupProjectListeners(app) {
         app.currentProject = selectedProject;
 
         renderTasks(app);
+        renderProjects(app);
     })
 };
 

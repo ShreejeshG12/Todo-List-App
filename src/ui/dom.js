@@ -60,9 +60,15 @@ export function createTaskElement(task) {
 }
 
 
-export function createProjectElement(project) {
+export function createProjectElement(project, app) {
     const projectContainer = document.createElement("div");
     projectContainer.classList.add("project-item");
+
+    if (app.currentProject?.id === project.id) {
+        projectContainer.classList.add("selected")
+    }
+
+
     projectContainer.dataset.id = project.id;
 
     const projectName = document.createElement("span");

@@ -11,7 +11,7 @@ export function renderProjects(app) {
 
     app.projects.forEach(project => {
 
-        const projectElement = createProjectElement(project);
+        const projectElement = createProjectElement(project, app);
         projectList.append(projectElement);
 
     })
