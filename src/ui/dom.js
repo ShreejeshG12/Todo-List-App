@@ -10,7 +10,6 @@ export function createTaskElement(task) {
 
     taskCard.dataset.id = task.id;
 
-
     const title = document.createElement("h3");
     title.textContent = task.title;
 
@@ -22,10 +21,13 @@ export function createTaskElement(task) {
 
     const priority = document.createElement("p");
     priority.textContent = `Priority: ${task.priority}`;
+    priority.classList.add("task-priority");
+    priority.classList.add(task.priority.toLowerCase());
 
 
     // making check boxes and buttons
     const completedCard = document.createElement("label");
+    completedCard.classList.add("task-status");
 
     const completedCheckBox = document.createElement("input")
     completedCheckBox.type = "checkbox";
@@ -42,6 +44,12 @@ export function createTaskElement(task) {
 
     completedCard.append(completedCheckBox, statusText);
 
+    const metadata = document.createElement("div");
+    metadata.classList.add("task-metadata")
+
+    const taskActions = document.createElement("div");
+    taskActions.classList.add("task-actions");
+
     const editButton = document.createElement("button");
     editButton.textContent = "Edit";
     editButton.classList.add("edit-task-button");
@@ -52,9 +60,10 @@ export function createTaskElement(task) {
     deleteButton.classList.add("delete-task-button");
     deleteButton.type = "button";
 
-
+    metadata.append(dueDate, priority);
+    taskActions.append(editButton, deleteButton)
     taskCard.append(
-        title, description, dueDate, priority, completedCard, editButton, deleteButton
+        title, description, metadata, completedCard, taskActions
     );
     return taskCard;
 }

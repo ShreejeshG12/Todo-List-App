@@ -59,10 +59,12 @@ export function setupAddTaskListener(app) {
     const taskDialog = document.querySelector("#task-dialog");
     const taskForm = document.querySelector("#task-form")
     const closeForm = document.querySelector("#close-form")
+    const cancelEditTask = document.querySelector("#cancel-edit-task")
 
     addTaskButton.addEventListener("click", () => {
         editingTaskId = "";
         taskForm.reset();
+
         taskDialog.showModal();
         closeForm.textContent = "Add Task";
     })
@@ -89,9 +91,9 @@ export function setupAddTaskListener(app) {
             const newTask = new Task(title.value, description.value, dueDate.value, priority.value, false);
 
             app.currentProject.addTask(newTask);
-            savedProjects(app.projects)
-        }
 
+        }
+        savedProjects(app.projects)
         renderTasks(app)
 
         taskForm.reset();
@@ -99,13 +101,19 @@ export function setupAddTaskListener(app) {
         taskDialog.close();
 
     })
+
+    cancelEditTask.addEventListener("click", () => {
+        editingTaskId = "";
+        taskForm.reset();
+        taskDialog.close();
+    })
 }
 
 
 export function deleteTaskListener(app) {
     const taskList = document.querySelector("#task-list");
 
-    taskList.addEventListener("submit", (event) => {
+    taskList.addEventListener("click", (event) => {
         const deleteButton = event.target.closest(".delete-task-button");
         if (!deleteButton) return;
 
@@ -114,15 +122,19 @@ export function deleteTaskListener(app) {
 
         app.currentProject.removeTask(taskId);
 
+        savedProjects(app.projects)
+
         renderTasks(app)
     });
+
 }
 
 export function editTaskListener(app) {
     const taskList = document.querySelector("#task-list");
     const taskDialog = document.querySelector("#task-dialog");
     const closeForm = document.querySelector("#close-form")
-
+    const taskForm = document.querySelector("#task-form")
+    const cancelEditTask = document.querySelector("#cancel-edit-task")
     const titleInput = document.querySelector("#task-title")
     const descriptionInput = document.querySelector("#task-description");
     const dueDateInput = document.querySelector("#task-date");
@@ -140,6 +152,10 @@ export function editTaskListener(app) {
 
         editingTaskId = taskId;
 
+        cancelEditTask.style.display = "block";
+
+
+
         titleInput.value = task.title;
         descriptionInput.value = task.description;
         dueDateInput.value = task.dueDate;
@@ -147,10 +163,16 @@ export function editTaskListener(app) {
         closeForm.textContent = "Edit Task"
 
 
-
-
         taskDialog.showModal()
+
     })
+
+    cancelEditTask.addEventListener("click", () => {
+        editingTaskId = "";
+        taskForm.reset();
+        taskDialog.close();
+    })
+
 }
 
 export function deleteProjectListener(app) {
@@ -164,6 +186,8 @@ export function deleteProjectListener(app) {
         const projectId = projectItem.dataset.id
 
         app.removeProject(projectId)
+
+        savedProjects(app.projects);
         renderProjects(app)
         renderTasks(app)
     })
@@ -210,6 +234,7 @@ export function editProjectListener(app) {
 
         app.editProject(editingProjectId, updatedProjectName);
 
+        savedProjects(app.projects)
         renderProjects(app);
 
         editProjectForm.reset();
@@ -239,6 +264,10 @@ export function toggleTaskListener(app) {
         const task = app.currentProject.tasks.find(task => task.id === taskId)
 
         task.toggleComplete();
+
+        savedProjects(app.projects);
+
+        renderProjects(app)
         renderTasks(app)
 
 
