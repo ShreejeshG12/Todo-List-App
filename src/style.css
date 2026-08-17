@@ -4,6 +4,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    background-color: light-dark(var(--light-bg), var(--dark-bg));
 }
 
 
@@ -16,6 +17,7 @@ body {
     font-family: Arial, Helvetica, sans-serif;
     min-height: 100vh;
     overflow-x: hidden;
+
 }
 
 #content {
@@ -448,4 +450,24 @@ dialog button[type="submit"] {
     }
 
 
+}
+
+:root {
+    color-scheme: light dark;
+
+    --light-bg: ghostwhite;
+    --light-color: darklategray;
+    --light-code: tomato;
+
+    --dark-bg: darklategray;
+    --dark-color: ghostwhite;
+    --dark-doe: gold;
+}
+
+.light {
+    color-scheme: light;
+}
+
+.dark {
+    color-scheme: dark;
 }

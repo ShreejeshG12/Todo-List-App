@@ -273,3 +273,29 @@ export function toggleTaskListener(app) {
 
     })
 }
+
+
+//Toggler
+
+export function toggleMode() {
+    const toggler = document.querySelector(".toggler");
+
+    toggler.addEventListener("click", () => {
+        let theme = document.documentElement.style.colorScheme;
+
+
+        if (theme === null) {
+            if (window.matchMedia("(prefers-color-scheme:dark)").matches) {
+                document.documentElement.style.colorScheme = "light";
+            }
+
+            document.documentElement.style.colorScheme = "dark";
+        }
+
+        else {
+            document.documentElement.style.colorScheme = (theme == "light") ? "dark" : "light";
+        }
+
+    })
+    console.log("Fired")
+}
